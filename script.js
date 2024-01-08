@@ -5,7 +5,6 @@ function getComputerOutput()
  {
 const random  = Math.random();
 
-
 return (random < 0.33) ? "Rock" : (random > 0.66) ? "Paper" : "Scissors";
 }
 
@@ -16,40 +15,59 @@ function playRound(computerSelection , userSelection)
 
   const result = computerSelection + userSelection;
 
-  if (result == "Rockscissors" || result == "Scissorspaper" || result == "Paperrock")
+  if (result == "RockScissors" || result == "ScissorsPaper" || result == "PaperRock")
    {
     ++computerScore;
     return `You Lose! You picked ${userSelection} ,but the computer picked ${computerSelection}`;
    }
-   else if (result == "Rockrock" || result == "Scissorsscissors" || result == "Paperpaper") 
+   else if (result == "RockRock" || result == "ScissorsScissors" || result == "PaperPaper") 
    {
     return `You Tied! You picked ${userSelection} ,and the computer picked ${computerSelection}`;
    }
-   else if ((result == "Rockpaper" || result == "Scissorsrock" || result == "Paperscissors") )
+   else if ((result == "RockPaper" || result == "ScissorsRock" || result == "PaperScissors") )
     {
     ++userScore;
     return `You Win! You picked ${userSelection} ,and the computer picked ${computerSelection}`;
    }
 }
 
-function game()
+
+//All my variable
+const buttons = document.querySelectorAll("button");
+const Results = document.getElementById("Result");
+const score = document.getElementById("score");
+const winner = document.getElementById("winner");
+let userScore = 0;
+let computerScore = 0;
+let over = false;
+
+//listening to the button press
+ buttons.forEach ((button) => 
  {
-    for(let i = 1; i <= 5; ++i)
-    {
-    //Get user input and make it lower case
-    const userSelection = prompt("What's your move?").toLowerCase();
-const computerSelection = getComputerOutput();
-    console.log(playRound(computerSelection, userSelection));
-    console.log(userScore + "-" + computerScore);
-    }
+ 
+  button.addEventListener("click", () => {
+  const userSelection = button.dataset.choice; 
   
-   return (computerScore < userScore) ? "YOU WIN :)" : (userScore < computerScore) ? "YOU LOSE :(" : "YOU TIED :/";
- }
+  if(over == true)
+  {
+    userScore = 0;
+    computerScore = 0;
+    winner.textContent= "";
+    over = false;
+  }
+  const roundResult = playRound(getComputerOutput(), userSelection);
+  Results.textContent = roundResult;
+  score.textContent = userScore + "-" + computerScore;
+  if(userScore == 5 || computerScore == 5)
+  {
+  winner.textContent = (computerScore < userScore) ? "YOU WIN :)" : "YOU LOSE :(" ;
+  over = true;
+  }
+  });
+ });
 
 
- let userScore = 0;
- let computerScore = 0;
-console.log(game());
+
 
 
 
