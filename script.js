@@ -54,7 +54,7 @@ let over = false;
     computerScore = 0;
     winner.textContent= "";
     over = false;
-  }
+  }g
   const roundResult = playRound(getComputerOutput(), userSelection);
   Results.textContent = roundResult;
   score.textContent = userScore + "-" + computerScore;
